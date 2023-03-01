@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: gateway
+  main:
+    allow-bean-definition-overriding: true
+    allow-circular-references: true
+  servlet:
+    multipart:
+      max-file-size: 400MB
+      max-request-size: 400MB
+      enabled: true
+
+server:
+  port: 8080
+  error:
+    include-message: always
+    include-binding-errors: always
+    whitelabel:
+      enabled: false
+
+security:
+  jwt:
+    secretKey: ${SECRET_KEY:9Sdyeei3eVadXxnGTxPXiTzgKVZth9p8Zwz9yCVr5JJLP2avvJ777}
+    tokenExpirationTime: 1440
+    refreshTokenExpTime: 1576800
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+
+swagger:
+  serverBaseUrl: ${SWAGGER_SERVER_BASE_URL:http://localhost:8080}
+
+springdoc:
+  packagesToScan: com.media_storage
+
+core:
+  name: core
+  userIdUrl: /v1/users/{userId}
+  mediaUrl: /v1/users/{userId}/media
+  fileDataUrl: /v1/users/{userId}/media/file-data
+  fileDataIdUrl: /v1/users/{userId}/media/file-data/{fileDataId}
+
+
+auth:
+  name: auth
+  userUrl: /v1/users
+  registrationUrl: /v1/users/registrations
+  confirmationUrl: /v1/users/{userId}/confirmations
+  tokenUrl: /v1/users/{userId}/tokens
+
+media:
+  name: media
+  baseUrl: /v1/media
+
+pattern:
+  urlPattern: user/(\d+)/.+
+  emailPattern: ^(.+)@(\S+)$
