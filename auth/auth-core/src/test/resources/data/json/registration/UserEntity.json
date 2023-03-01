@@ -1,0 +1,10 @@
+{
+  "id": 1,
+  "email": "user@gmail.com",
+  "password": "password",
+  "status": "EMAIL_CONFIRMATION",
+  "role": "ROLE_USER",
+  "createdAt": "yyyy-MM-ddTHH:mm:ss",
+  "updatedAt": "yyyy-MM-ddTHH:mm:ss",
+  "deleted": false
+}
