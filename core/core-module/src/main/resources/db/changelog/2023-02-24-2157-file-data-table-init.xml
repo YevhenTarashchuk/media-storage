@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+
+    <changeSet author="Tarashchuk" id="2023-02-24-2157-file-data-table-init">
+        <createTable tableName="file_data">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints nullable="false"
+                             unique="true"
+                             primaryKey="true"
+                             primaryKeyName="confirmation_pkey"/>
+            </column>
+
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="url" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="file_type" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"
+                             foreignKeyName="confirmation_user_fk"
+                             referencedTableName="users"
+                             referencedColumnNames="id"/>
+            </column>
+
+            <column name="created_at" type="timestamp without time zone"/>
+            <column name="updated_at" type="timestamp without time zone"/>
+            <column name="is_deleted" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>

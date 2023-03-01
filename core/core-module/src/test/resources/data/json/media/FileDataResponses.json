@@ -1,0 +1,57 @@
+{
+  "content": [
+    {
+      "id": 1,
+      "name": "data/file/photo.jpeg",
+      "url": "user/1/image/url",
+      "userId": 1,
+      "fileType": "IMAGE"
+    },
+    {
+      "id": 3,
+      "name": "audio2.aac",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "AUDIO"
+    },
+    {
+      "id": 4,
+      "name": "video1.mp4",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "VIDEO"
+    },
+    {
+      "id": 6,
+      "name": "book.pdf",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "OTHER"
+    },
+    {
+      "id": 7,
+      "name": "app.apk",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "OTHER"
+    }
+  ],
+  "pageable": {
+    "sort": [],
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 5,
+  "totalPages": 1,
+  "first": true,
+  "size": 20,
+  "number": 0,
+  "sort": [],
+  "numberOfElements": 5,
+  "empty": false
+}
+
