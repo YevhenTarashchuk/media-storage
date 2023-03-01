@@ -1,0 +1,47 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - media_network
+
+  media-postgres:
+    build:
+      context: .
+      dockerfile: core/core-module/db.Dockerfile
+      args:
+        - DATABASE_NAME=media
+        - DB_USERNAME=media_user
+        - DB_PASSWORD=12345678
+    container_name: media_postgres
+    image: media_postgres
+    ports:
+      - "5437:5432"
+    networks:
+      - media_network
+
+  auth-postgres:
+    build:
+      context: .
+      dockerfile: auth/auth-core/db.Dockerfile
+      args:
+        - DATABASE_NAME=auth
+        - DB_USERNAME=auth_user
+        - DB_PASSWORD=12345678
+    container_name: auth_postgres
+    image: auth_postgres
+    ports:
+      - "5438:5432"
+    networks:
+      - media_network
+
+networks:
+  media_network:
