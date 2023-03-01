@@ -1,0 +1,150 @@
+version: '3'
+services:
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    environment:
+      RABBITMQ_DEFAULT_USER: "rabbitmq"
+      RABBITMQ_DEFAULT_PASS: "rabbitmq"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - media_network
+
+  media-postgres:
+    build:
+      context: .
+      dockerfile: core/core-module/db.Dockerfile
+      args:
+        - DATABASE_NAME=media
+        - DB_USERNAME=media_user
+        - DB_PASSWORD=12345678
+    container_name: media_postgres
+    image: media_postgres
+    ports:
+      - "5437:5432"
+    networks:
+      - media_network
+
+  auth-postgres:
+    build:
+      context: .
+      dockerfile: auth/auth-core/db.Dockerfile
+      args:
+        - DATABASE_NAME=auth
+        - DB_USERNAME=auth_user
+        - DB_PASSWORD=12345678
+    container_name: auth_postgres
+    image: auth_postgres
+    ports:
+      - "5438:5432"
+    networks:
+      - media_network
+
+  media-discovery:
+    build:
+      context: .
+      dockerfile: discovery/Dockerfile
+    container_name: media_discovery
+    image: media_discovery
+    expose:
+      - 8761
+    ports:
+      - "8761:8761"
+    networks:
+      - media_network
+
+  file-media:
+    build:
+      context: .
+      dockerfile: media/media-core/Dockerfile
+    container_name: file_media
+    image: file_media
+    environment:
+      - AWS_ACCESS_KEY=
+      - AWS_ACCESS_SECRET=
+      - EUREKA_URI=http://media-discovery:8761/eureka
+    depends_on:
+      - media-discovery
+    expose:
+      - 8077
+    networks:
+      - media_network
+
+  media-core:
+    build:
+      context: .
+      dockerfile: core/core-module/Dockerfile
+    container_name: media_core
+    image: media_core
+    environment:
+      - DB_URL=jdbc:postgresql://media-postgres:5432/media
+      - EUREKA_URI=http://media-discovery:8761/eureka
+    depends_on:
+      - media-discovery
+      - media-postgres
+    expose:
+      - 8081
+    networks:
+      - media_network
+
+  media-auth:
+    build:
+      context: .
+      dockerfile: auth/auth-core/Dockerfile
+    container_name: media_auth
+    image: media_auth
+    environment:
+      - RABBITMQ_DEFAULT_HOST=rabbitmq
+      - DB_URL=jdbc:postgresql://auth-postgres:5432/auth
+      - EUREKA_URI=http://media-discovery:8761/eureka
+    depends_on:
+      - media-discovery
+      - auth-postgres
+      - rabbitmq
+    expose:
+      - 8082
+    networks:
+      - media_network
+
+  media-communication:
+    build:
+      context: .
+      dockerfile: communication/communication-core/Dockerfile
+    container_name: media_communication
+    image: media_communication
+    environment:
+      - RABBITMQ_DEFAULT_HOST=rabbitmq
+      - COMMUNICATION_EMAIL=
+      - COMMUNICATION_USERNAME=
+      - COMMUNICATION_PASSWORD=
+      - EUREKA_URI=http://media-discovery:8761/eureka
+    depends_on:
+      - media-discovery
+      - rabbitmq
+    expose:
+      - 8078
+    networks:
+      - media_network
+
+  media-gateway:
+    build:
+      context: .
+      dockerfile: gateway/Dockerfile
+    container_name: media_gateway
+    image: media_gateway
+    environment:
+      - EUREKA_URI=http://media-discovery:8761/eureka
+    depends_on:
+      - media-discovery
+    expose:
+      - 8080
+    ports:
+      - "8080:8080"
+    networks:
+      - media_network
+
+networks:
+  media_network:
