@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: communication
+  rabbitmq:
+    host: ${RABBITMQ_DEFAULT_HOST:localhost}
+    username: ${RABBITMQ_DEFAULT_USER:rabbitmq}
+    password: ${RABBITMQ_DEFAULT_PASS:rabbitmq}
+    port: 5672
+    exchange: communication_exchange
+    queue: email
+    key: email_key
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+
+    username: ${COMMUNICATION_USERNAME}
+    password: ${COMMUNICATION_PASSWORD}
+    properties:
+      mail:
+        debug: true
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        from: ${COMMUNICATION_EMAIL}
+
+server:
+  port: 8078
+
+eureka:
+  client:
+    registerWithEureka: true
+    fetchRegistry: true
+    service-url:
+      defaultZone: ${EUREKA_URI:http://localhost:8761/eureka}
+

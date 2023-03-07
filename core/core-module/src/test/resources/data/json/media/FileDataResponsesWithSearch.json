@@ -1,0 +1,28 @@
+{
+  "content": [
+    {
+      "id": 7,
+      "name": "app.apk",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "OTHER"
+    }
+  ],
+  "pageable": {
+    "sort": [],
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 1,
+  "first": true,
+  "size": 20,
+  "number": 0,
+  "sort": [],
+  "numberOfElements": 1,
+  "empty": false
+}

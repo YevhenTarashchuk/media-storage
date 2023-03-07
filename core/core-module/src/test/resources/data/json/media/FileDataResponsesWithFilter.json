@@ -1,0 +1,35 @@
+{
+  "content": [
+    {
+      "id": 3,
+      "name": "audio2.aac",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "AUDIO"
+    },
+    {
+      "id": 4,
+      "name": "video1.mp4",
+      "url": "some_url",
+      "userId": 1,
+      "fileType": "VIDEO"
+    }
+  ],
+  "pageable": {
+    "sort": [],
+    "offset": 0,
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalPages": 1,
+  "totalElements": 2,
+  "first": true,
+  "size": 20,
+  "number": 0,
+  "sort": [],
+  "numberOfElements": 2,
+  "empty": false
+}
